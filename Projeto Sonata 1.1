@@ -1,26 +1,3 @@
-local player = game.Players.LocalPlayer
-local gui = player:WaitForChild("PlayerGui"):WaitForChild("Main")
-
-local function encontrarBotaoJogar()
-    for _, obj in ipairs(gui:GetDescendants()) do
-        if obj:IsA("TextButton") and string.lower(obj.Text) == "jogar" then
-            return obj
-        end
-    end
-    return nil
-end
-
-local botaoJogar = encontrarBotaoJogar()
-
-if botaoJogar then
-    wait(1) -- espera pequena pra garantir que carregou
-    botaoJogar.MouseButton1Click:Fire()
-    print("✅ Botão 'JOGAR' foi clicado automaticamente!")
-else
-    warn("🚫 Botão 'JOGAR' não encontrado.")
-end
-
-
 local TeleportService = game:GetService("TeleportService")
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
