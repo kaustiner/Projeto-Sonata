@@ -1,4 +1,19 @@
-local player = game.Players.LocalPlayer
+-- Cria uma interface na tela com uma mensagem
+local gui = Instance.new("ScreenGui")
+gui.Name = "CreditosKaustiner"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, 0, 0, 50) -- largura total, altura de 50 pixels
+label.Position = UDim2.new(0, 0, 0, 0) -- topo da tela
+label.BackgroundTransparency = 1 -- fundo invisível
+label.Text = "Feito por Kaustiner"
+label.TextColor3 = Color3.new(1, 1, 1) -- cor branca
+label.TextStrokeTransparency = 0.5 -- contorno suave
+label.Font = Enum.Font.SourceSansBold
+label.TextScaled = true
+label.Parent = guilocal player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local rootPart = char:WaitForChild("HumanoidRootPart")
 
@@ -21,20 +36,3 @@ end
 
 -- Executa a função
 teleportSequencial()
-
--- Cria uma interface na tela com uma mensagem
-local gui = Instance.new("ScreenGui")
-gui.Name = "CreditosKaustiner"
-gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
-
-local label = Instance.new("TextLabel")
-label.Size = UDim2.new(1, 0, 0, 50) -- largura total, altura de 50 pixels
-label.Position = UDim2.new(0, 0, 0, 0) -- topo da tela
-label.BackgroundTransparency = 1 -- fundo invisível
-label.Text = "Feito por Kaustiner"
-label.TextColor3 = Color3.new(1, 1, 1) -- cor branca
-label.TextStrokeTransparency = 0.5 -- contorno suave
-label.Font = Enum.Font.SourceSansBold
-label.TextScaled = true
-label.Parent = gui
