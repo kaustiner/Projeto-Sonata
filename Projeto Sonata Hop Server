@@ -1,0 +1,29 @@
+local TeleportService = game:GetService("TeleportService")
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Função para teleportar com delay
+local function teleportSequencial()
+    -- TP 1
+    rootPart.CFrame = CFrame.new(Vector3.new(2248.76, 473.32, 9585.08))
+    print("Teleportado para ponto 1")
+    wait(17)
+
+    -- TP 2
+    rootPart.CFrame = CFrame.new(Vector3.new(12341.06, 369.45, 1417.81))
+    print("Teleportado para ponto 2")
+    wait(17)
+
+    -- TP 3
+    rootPart.CFrame = CFrame.new(Vector3.new(-6979.29, 145.73, 92.67))
+    print("Teleportado para ponto 3")
+    wait(17)
+
+    -- Trocar de servidor
+    local placeId = game.PlaceId -- Usa o ID atual do jogo
+    TeleportService:Teleport(placeId, player) -- Envia o jogador para uma instância diferente
+end
+
+-- Executa a função
+teleportSequencial()
