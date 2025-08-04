@@ -1,0 +1,28 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Aguarda alguns segundos pro carregamento da interface
+wait(2)
+
+-- Procura um botão com o texto "JOGAR"
+local function procurarBotaoJogar()
+    for _, obj in ipairs(playerGui:GetDescendants()) do
+        if obj:IsA("TextButton") or obj:IsA("ImageButton") then
+            if obj.Text and string.lower(obj.Text) == "jogar" then
+                return obj
+            end
+        end
+    end
+    return nil
+end
+
+local botao = procurarBotaoJogar()
+
+if botao then
+    print("✅ Botão encontrado: " .. botao:GetFullName())
+    wait(1)
+    botao:Activate() -- Tenta ativar o botão como se fosse clicado
+    botao.MouseButton1Click:Fire() -- Dispara o evento, se existir
+else
+    warn("❌ Botão 'JOGAR' não encontrado.")
+end
