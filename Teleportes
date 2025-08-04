@@ -1,0 +1,32 @@
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Coordenadas fornecidas
+local targetPosition = Vector3.new(2248.76220703125, 473.3243408203125, 9585.083984375)
+
+-- Faz o teleporte
+rootPart.CFrame = CFrame.new(targetPosition)
+Wait(17000)
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Coordenadas fornecidas
+local targetPosition = Vector3.new(12341.0693359375, 369.458984375, 1417.8123779296875)
+
+-- Faz o teleporte
+rootPart.CFrame = CFrame.new(targetPosition)
+Wait(17000)
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Coordenadas fornecidas
+local targetPosition = Vector3.new(6979.84912109375, 145.7305908203125, 92.82228088378906)
+
+-- Faz o teleporte
+rootPart.CFrame = CFrame.new(targetPosition)
+Wait(17000)
