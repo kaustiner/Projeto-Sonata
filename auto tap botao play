@@ -26,3 +26,48 @@ if botao then
 else
     warn("❌ Botão 'JOGAR' não encontrado.")
 end
+
+-- Cria uma interface na tela com uma mensagem
+local gui = Instance.new("ScreenGui")
+gui.Name = "CreditosKaustiner"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, 0, 0, 50) -- largura total, altura de 50 pixels
+label.Position = UDim2.new(0, 0, 0, 0) -- topo da tela
+label.BackgroundTransparency = 1 -- fundo invisível
+label.Text = "Feito por Kaustiner"
+label.TextColor3 = Color3.new(1, 1, 1) -- cor branca
+label.TextStrokeTransparency = 0.5 -- contorno suave
+label.Font = Enum.Font.SourceSansBold
+label.TextScaled = true
+label.Parent = guilocal TeleportService = game:GetService("TeleportService")
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Função para teleportar com delay
+local function teleportSequencial()
+    -- TP 1
+    rootPart.CFrame = CFrame.new(Vector3.new(2248.76, 473.32, 9585.08))
+    print("Teleportado para ponto 1")
+    wait(17)
+
+    -- TP 2
+    rootPart.CFrame = CFrame.new(Vector3.new(12341.06, 369.45, 1417.81))
+    print("Teleportado para ponto 2")
+    wait(17)
+
+    -- TP 3
+    rootPart.CFrame = CFrame.new(Vector3.new(-6979.29, 145.73, 92.67))
+    print("Teleportado para ponto 3")
+    wait(17)
+
+    -- Trocar de servidor
+    local placeId = game.PlaceId -- Usa o ID atual do jogo
+    TeleportService:Teleport(placeId, player) -- Envia o jogador para uma instância diferente
+end
+
+-- Executa a função
+teleportSequencial()
