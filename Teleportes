@@ -2,31 +2,22 @@ local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local rootPart = char:WaitForChild("HumanoidRootPart")
 
--- Coordenadas fornecidas
-local targetPosition = Vector3.new(2248.76220703125, 473.3243408203125, 9585.083984375)
+-- Função para teleportar com delay
+local function teleportSequencial()
+    -- TP 1
+    rootPart.CFrame = CFrame.new(Vector3.new(2248.76, 473.32, 9585.08))
+    print("Teleportado para ponto 1")
+    wait(17)
 
--- Faz o teleporte
-rootPart.CFrame = CFrame.new(targetPosition)
-Wait(17000)
+    -- TP 2
+    rootPart.CFrame = CFrame.new(Vector3.new(12341.06, 369.45, 1417.81))
+    print("Teleportado para ponto 2")
+    wait(17)
 
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local rootPart = char:WaitForChild("HumanoidRootPart")
+    -- TP 3
+    rootPart.CFrame = CFrame.new(Vector3.new(-6979.28857421875, 145.73057556152344, 92.67015838623047))
+    print("Teleportado para ponto 3")
+end
 
--- Coordenadas fornecidas
-local targetPosition = Vector3.new(12341.0693359375, 369.458984375, 1417.8123779296875)
-
--- Faz o teleporte
-rootPart.CFrame = CFrame.new(targetPosition)
-Wait(17000)
-
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local rootPart = char:WaitForChild("HumanoidRootPart")
-
--- Coordenadas fornecidas
-local targetPosition = Vector3.new(6979.84912109375, 145.7305908203125, 92.82228088378906)
-
--- Faz o teleporte
-rootPart.CFrame = CFrame.new(targetPosition)
-Wait(17000)
+-- Executa a função
+teleportSequencial()
