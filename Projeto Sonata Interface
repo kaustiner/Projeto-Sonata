@@ -1,0 +1,23 @@
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+-- Criando a GUI
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local destinos = {
+    ["Ponto 1"] = Vector3.new(2248.76, 473.32, 9585.08),
+    ["Ponto 2"] = Vector3.new(12341.06, 369.45, 1417.81),
+    ["Ponto 3"] = Vector3.new(-6979.29, 145.73, 92.67)
+}
+
+for nome, pos in pairs(destinos) do
+    local botao = Instance.new("TextButton")
+    botao.Size = UDim2.new(0, 200, 0, 50)
+    botao.Position = UDim2.new(0, 10, 0, 10 + (#screenGui:GetChildren()) * 60)
+    botao.Text = nome
+    botao.Parent = screenGui
+    botao.MouseButton1Click:Connect(function()
+        rootPart.CFrame = CFrame.new(pos)
+        print("Teleportado para " .. nome)
+    end)
+end
