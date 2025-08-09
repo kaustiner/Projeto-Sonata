@@ -1,0 +1,94 @@
+-- 🔁 Troca Inteligente de Servidor com verificação
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+
+local placeId = game.PlaceId
+local currentJobId = game.JobId
+
+local function getValidServer()
+    local cursor = ""
+    local urlBase = "https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?limit=100"
+
+    repeat
+        local url = urlBase .. (cursor ~= "" and "&cursor=" .. cursor or "")
+        local success, response = pcall(function()
+            return HttpService:JSONDecode(game:HttpGet(url))
+        end)
+
+        if success and response and response.data then
+            for _, server in ipairs(response.data) do
+                local isNotCurrent = server.id ~= currentJobId
+                local hasSpace = server.playing < server.maxPlayers
+                local noFriends = not server.hasFriends
+
+                if isNotCurrent and hasSpace and noFriends then
+                    return server.id
+                end
+            end
+            cursor = response.nextPageCursor
+        else
+            warn("❌ Falha ao buscar servidores.")
+            break
+        end
+    until not cursor
+
+    return nil
+end
+
+local function teleportToNewServer()
+    local attempts = 0
+    local maxAttempts = 7
+
+    while attempts < maxAttempts do
+        local serverId = getValidServer()
+        if serverId then
+            print("🔁 Tentando trocar para servidor:", serverId)
+            TeleportService:TeleportToPlaceInstance(placeId, serverId, Players.LocalPlayer)
+
+            -- Aguarda alguns segundos e verifica se ainda está no mesmo servidor
+            wait(5)
+            if game.JobId ~= currentJobId then
+                print("✅ Troca de servidor bem-sucedida!")
+                return
+            else
+                print("⚠️ Ainda no mesmo servidor. Tentando novamente...")
+            end
+        else
+            warn("🚫 Nenhum servidor válido encontrado.")
+        end
+
+        attempts += 1
+        wait(3)
+    end
+
+    warn("❌ Falha após " .. maxAttempts .. " tentativas de troca de servidor.")
+end
+
+-- 🧍‍♂️ Teleportação Sequencial
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local rootPart = char:WaitForChild("HumanoidRootPart")
+
+local function teleportSequencial()
+    -- TP 1
+    rootPart.CFrame = CFrame.new(Vector3.new(2248.76, 473.32, 9585.08))
+    print("Teleportado para ponto 1")
+    wait(17)
+
+    -- TP 2
+    rootPart.CFrame = CFrame.new(Vector3.new(12341.06, 369.45, 1417.81))
+    print("Teleportado para ponto 2")
+    wait(17)
+
+    -- TP 3
+    rootPart.CFrame = CFrame.new(Vector3.new(-6979.29, 145.73, 92.67))
+    print("Teleportado para ponto 3")
+    wait(17)
+
+    -- ✅ Após TP final, tenta trocar de servidor
+    teleportToNewServer()
+end
+
+-- 🚀 Executa tudo
+teleportSequencial()
