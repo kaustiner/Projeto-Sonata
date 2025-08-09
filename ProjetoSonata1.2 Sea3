@@ -1,10 +1,31 @@
--- 🔁 Troca Inteligente de Servidor com verificação
+-- 🔁 Troca Inteligente de Servidor com verificação + Créditos na tela
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
 
 local placeId = game.PlaceId
 local currentJobId = game.JobId
+
+-- 🖼️ Interface de crédito
+local function showCredit()
+    local player = Players.LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "KaustinerCredit"
+    gui.ResetOnSpawn = false
+    gui.Parent = player:WaitForChild("PlayerGui")
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 0, 40)
+    label.Position = UDim2.new(0, 0, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = "feito por kaustiner"
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextStrokeTransparency = 0.5
+    label.Font = Enum.Font.SourceSansBold
+    label.TextSize = 24
+    label.Parent = gui
+end
 
 local function getValidServer()
     local cursor = ""
@@ -46,7 +67,6 @@ local function teleportToNewServer()
             print("🔁 Tentando trocar para servidor:", serverId)
             TeleportService:TeleportToPlaceInstance(placeId, serverId, Players.LocalPlayer)
 
-            -- Aguarda alguns segundos e verifica se ainda está no mesmo servidor
             wait(5)
             if game.JobId ~= currentJobId then
                 print("✅ Troca de servidor bem-sucedida!")
@@ -65,12 +85,14 @@ local function teleportToNewServer()
     warn("❌ Falha após " .. maxAttempts .. " tentativas de troca de servidor.")
 end
 
--- 🧍‍♂️ Teleportação Sequencial
-local player = Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local rootPart = char:WaitForChild("HumanoidRootPart")
-
 local function teleportSequencial()
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local rootPart = char:WaitForChild("HumanoidRootPart")
+
+    -- 🖼️ Mostra crédito
+    showCredit()
+
     -- TP 1
     rootPart.CFrame = CFrame.new(Vector3.new(2248.76, 473.32, 9585.08))
     print("Teleportado para ponto 1")
@@ -86,7 +108,6 @@ local function teleportSequencial()
     print("Teleportado para ponto 3")
     wait(17)
 
-    -- ✅ Após TP final, tenta trocar de servidor
     teleportToNewServer()
 end
 
