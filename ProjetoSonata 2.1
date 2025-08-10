@@ -1,0 +1,70 @@
+-- ⏳ Espera 2 segundos antes de iniciar tudo
+wait(2)
+
+-- ▶️ Simula clique no botão "Play"
+local player = game:GetService("Players").LocalPlayer
+local playButton = player:WaitForChild("PlayerGui"):WaitForChild("LoadingGUI"):WaitForChild("Play")
+
+if playButton:IsA("TextButton") then
+    for _, conn in ipairs(getconnections(playButton.MouseButton1Click)) do
+        conn:Fire()
+    end
+    print("✅ Clique no botão 'Play' simulado com sucesso.")
+else
+    print("❌ 'Play' não é um TextButton.")
+end
+
+-- ⏳ Espera 3 segundos antes de iniciar o teletransporte
+wait(3)
+
+-- 🔁 Troca Inteligente de Servidor com verificação + Créditos na tela
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+local placeId = game.PlaceId
+local currentJobId = game.JobId
+
+-- 🖼️ Interface de crédito
+local function showCredit()
+    local player = Players.LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "KaustinerCredit"
+    gui.ResetOnSpawn = false
+    gui.Parent = player:WaitForChild("PlayerGui")
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 0, 40)
+    label.Position = UDim2.new(0, 0, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = "feito por kaustiner"
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextStrokeTransparency = 0.5
+    label.Font = Enum.Font.SourceSansBold
+    label.TextSize = 24
+    label.Parent = gui
+end
+
+local function getValidServer()
+    local cursor = ""
+    local urlBase = "https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?limit=100"
+
+    repeat
+        local url = urlBase .. (cursor ~= "" and "&cursor=" .. cursor or "")
+        local success, response = pcall(function()
+            return HttpService:JSONDecode(game:HttpGet(url))
+        end)
+
+        if success and response and response.data then
+            for _, server in ipairs(response.data) do
+                local isNotCurrent = server.id ~= currentJobId
+                local hasSpace = server.playing < server.maxPlayers
+                local noFriends = not server.hasFriends
+
+                if isNotCurrent and hasSpace and noFriends then
+                    return server.id
+                end
+            end
+            cursor = response.nextPageCursor
+        else
